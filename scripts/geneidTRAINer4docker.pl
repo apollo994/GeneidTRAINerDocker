@@ -14,7 +14,7 @@ use Data::Dumper;
 # MAIN VARIABLES 
 my $PROGRAM = "geneidTRAINer";
 my $VERSION = "1.2docker";
-my $path = "/scripts";
+my $path = "/scripts_geneid";
 my $TMP = "./tmp/";
 `mkdir -p $TMP`; 
 my $TMPROOT   = "trainer_$$";
