@@ -33,7 +33,7 @@ RUN apt-get update && \
 
 
 # Install BioPerl using cpan
-RUN cpan CJFIELDS/BioPerl-1.7.8.tar.gz
+RUN cpan -f CJFIELDS/BioPerl-1.7.8.tar.gz
 
 # Run cpan to get some modules required by the in-house modules/perl wrapper 
 RUN cpan Data::Dumper \ 
