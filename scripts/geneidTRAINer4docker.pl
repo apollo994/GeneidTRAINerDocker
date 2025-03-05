@@ -9,16 +9,7 @@ use Geneid::geneid;
 use Geneid::geneidCEGMA;
 use Data::Dumper;
 
-### This is the path to the awk scripts and C programs; change this to suit your system
-
-# MAIN VARIABLES 
-my $PROGRAM = "geneidTRAINer";
-my $VERSION = "1.2docker";
-my $path = "/scripts";
-my $TMP = "./tmp/";
-`mkdir -p $TMP`; 
-my $TMPROOT   = "trainer_$$";
-$SIG{TERM} = sub { die "Caught a sigterm $!" };
+### Import command line arguments firts and so species name can be used in tmp folder
 
 ########PROGRAM SPECIFIC VARIABLES
 my $count = 0;
@@ -110,22 +101,34 @@ my $startusrbra = 0;
 my $endusrbra = 0;
 my $userprofile = 0;
 
+
 GetOptions(
-	   'species:s'         => \$species,
+	   'species:s'     => \$species,
 	   'gff:s'         => \$gff,
 	   'fastas:s'      => \$fasta,
-           'results:s'     => \$results,
-           'reduced|red:s'	=> \$reduced,
-           'userdata:s'      => \$extdata,
-           'branch=s{2}'	=> \@branchp
-	
-	   	   );
+       'results:s'     => \$results,
+       'reduced|red:s' => \$reduced,
+       'userdata:s'    => \$extdata,
+       'branch=s{2}'   => \@branchp
+);
+
 
 my $usage = "Usage: $0 -species <speciesname> -gff <inputpath><gffname> -fastas <inputpath><fastasname> -results <results_dir> -reduced <yes/no> -userdata <inputpath><configfilename> (optional) -branch <inputpath><memeprofilefilename>[space]<memeprofilenumber> (optional)\n ";
 
 
 print STDERR $usage and exit unless (($species =~ /^(\w\.\w+)|(\w+)$/i) && $gff && $fasta && $results && ($reduced =~ /^(yes|y)|(n|no)$/i)); 
 
+
+### This is the path to the awk scripts and C programs; change this to suit your system
+
+# MAIN VARIABLES 
+my $PROGRAM = "geneidTRAINer";
+my $VERSION = "1.2docker";
+my $path = "/scripts_geneid";
+my $TMP = "./tmp_${species}/";
+`mkdir -p $TMP`; 
+my $TMPROOT   = "trainer_$$";
+$SIG{TERM} = sub { die "Caught a sigterm $!" };
 
 ####DECLARE A VARIABLE FOR A GIVEN SPECIES WHERE SEVERAL VALUES OBTAINED BY TRAINING NEED BE SAVED####
 
